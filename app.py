@@ -11,7 +11,12 @@ st.write("Aplikasi ini memprediksi apakah seorang mahasiswa berisiko mengalami *
 # Load the model and data template
 @st.cache_resource
 def load_model():
-    return joblib.load("model/model.joblib")
+    if os.path.exists("model/model.joblib"):
+        return joblib.load("model/model.joblib")
+    elif os.path.exists("model.joblib"):
+        return joblib.load("model.joblib")
+    else:
+        raise FileNotFoundError("File model.joblib tidak ditemukan di GitHub Anda. Pastikan sudah terupload!")
 
 model = load_model()
 
